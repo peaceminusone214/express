@@ -1,99 +1,77 @@
-10.1 Hàm callback là gì
+    10.1 Hàm Callback là gì?
+Trong JavaScript, hàm callback là một hàm được truyền như một đối số vào một hàm khác, và được thực thi sau khi hàm chứa nó hoàn thành một tác vụ nhất định. Nói cách khác, callback là một cơ chế cho phép xử lý các tác vụ bất đồng bộ theo cách "gọi lại" khi nhiệm vụ kết thúc.
 
-Trong JavaScript, hàm callback là một hàm được truyền vào một hàm khác như một tham số, và sẽ được thực thi sau khi hàm "cha" hoàn thành một tác vụ nào đó. Nói một cách đơn giản, nó là một cách để đảm bảo một đoạn mã được thực thi sau khi một đoạn mã khác hoàn thành.
+Callback là một trong ba kỹ thuật chính để xử lý lập trình bất đồng bộ trong JavaScript, bên cạnh Promise và Async/Await.
 
-Hàm callback cũng là một trong ba kỹ thuật được sử dụng để lập trình bất đồng bộ trong JavaScript.
+Callback trong tiếng Anh nghĩa là "gọi lại" — ám chỉ việc gọi lại hàm đã truyền vào sau khi hoàn tất một hành động cụ thể.
 
-Callback nghĩa là gọi lại.
+    Đặc điểm của hàm Callback
+Truyền như tham số: Một callback được truyền vào hàm khác và được gọi sau khi một hành động hoặc điều kiện nào đó hoàn thành.
 
-Các đặc điểm của hàm callback
+Thực thi bất đồng bộ: Callback thường được dùng để xử lý các tác vụ không chặn luồng chính, như gọi API, thao tác với file, hoặc xử lý hẹn giờ.
 
-- Truyền như tham số: callback là một hàm được truyền vào hàm khác để thực thi sau khi một điều kiện hoặc tác vụ hoàn tất.
+Tính linh hoạt: Callback có thể là:
 
-- Thực thi bất đồng bộ: thường dùng để xử lý các tác vụ không chặn luồng chính (non-blocking), như truy cập thiết bị (đọc/ghi tập tin), gọi API, hoặc trong các hàm hẹn giờ (timer).
+Hàm ẩn danh (anonymous function)
 
-- Tính linh hoạt: có thể là hàm ẩn danh (anonymous function), hàm mũi tên (arrow function), hoặc hàm đã được định nghĩa trước (function expression).
+Hàm mũi tên (arrow function)
 
-- "Callback Hell": nếu lồng quá nhiều callback, mã nguồn có thể trở nên khó đọc và bảo trì. Callback hell thường được giải quyết bằng Promise hoặc async/await.
+Hàm được định nghĩa trước (named function)
 
-Một số tính huống có sử dụng hàm callback
+Callback Hell: Việc lồng quá nhiều callback có thể khiến mã trở nên rối rắm, khó đọc và khó bảo trì. Tình trạng này gọi là "callback hell" và thường được khắc phục bằng Promise hoặc Async/Await.
 
-- Xử lý sự kiện (event handling): gắn hàm callback để phản hồi hành động của người dùng (ví dụ: click, hover, submit).
+    Các tình huống thường sử dụng callback
+Xử lý sự kiện: Gắn callback để phản hồi các hành động như click, hover, submit của người dùng.
 
-- Tác vụ bất đồng bộ: gọi API, đọc/ghi tập tin, hoặc sử dụng trong các hàm hẹn giờ (ví dụ: setTimeout, setInterval).
+Tác vụ bất đồng bộ: Ví dụ như gọi API, đọc/ghi tập tin, hoặc sử dụng setTimeout, setInterval.
 
-- Xử lý mảng: sử dụng trong các phương thức như forEach, map, filter, reduce.
+Xử lý mảng: Callback được sử dụng trong các phương thức mảng như forEach(), map(), filter(), reduce().
 
-- Hoàn thành tác vụ: đảm bảo một đoạn mã chạy sau khi tác vụ khác hoàn tất (ví dụ: tải dữ liệu từ server rồi hiển thị lên giao diện).
+Xác định thứ tự thực thi: Đảm bảo một hành động chỉ thực hiện sau khi hành động khác hoàn tất, chẳng hạn như tải dữ liệu từ server rồi mới hiển thị lên giao diện.
 
-- Tùy chỉnh logic: cho phép người dùng truyền logic riêng vào hàm tổng quát.
+Tùy biến logic: Cho phép truyền logic xử lý riêng biệt từ bên ngoài vào một hàm tổng quát.
 
-Một số ví dụ sử dụng hàm callback
+    Ví dụ minh họa
+    Ví dụ 1: Sử dụng callback trong xử lý sự kiện
 
-Ví dụ 1. Dùng hàm callback trong xử lý sự kiện.
-
-Khi người dùng nhấp vào một nút “Đăng ký”, một sự kiện "click" được kích hoạt. Bạn có thể sử dụng hàm callback để xử lý sự kiện này và thực hiện một hành động nào đó.
-
-[callback1.html]
-
+<!-- callback1.html -->
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
+    <meta charset="UTF-8">
+    <title>Ví dụ callback</title>
 </head>
-
 <body>
-
-    <button id="dang-ky">Đăng
-ký</button>
+    <button id="dang-ky">Đăng ký</button>
 
     <script>
-
-        document.getElementById("dang-ky").addEventListener("click",
-() => {
-
+        document.getElementById("dang-ky").addEventListener("click", () => {
             alert("Nút đã được bấm!");
-
         });
-
     </script>
-
 </body>
-
 </html>
+    Mở tệp callback1.html bằng trình duyệt để thấy thông báo xuất hiện khi nhấn nút.
 
-Mở tập tin callback1.html bằng trình duyệt để xem kết quả.
+    Ví dụ 2: Sử dụng callback với hàm setTimeout
 
-Ví dụ 2. Sử dụng hàm callback trong các hàm hẹn giờ (ví dụ: setTimeout, setInterval).
-
-Khi hàm setTimeout() chạy, nó sẽ đưa luồng xử lý vào trạng thái chờ với thời gian được xác định ở tham số thứ 2 (ví dụ chờ 5000ms = 5 giây). Sau khi hết thời gian chờ, hàm callback sẽ được gọi và thực thi. 
-
-setTimeout(()
-=> {
-
+setTimeout(() => {
     console.log("Đã hết 5 giây! (sau 5 giây)");
-
-},
-5000);
+}, 5000);
 
 console.log("Đang chờ");
-
-Kết quả chạy:
+Kết quả khi chạy chương trình:
 
 Đang chờ
-
 Đã hết 5 giây! (sau 5 giây)
+==Callback được thực thi sau 5 giây nhờ cơ chế bất đồng bộ.
 
-===============================================================================
+Hạn chế của Callback
+Callback Hell: Cấu trúc lồng nhau quá sâu làm mã khó hiểu và rối rắm.
 
-Nhược điểm của hàm callback
+Xử lý lỗi thủ công: Không có cơ chế bắt lỗi chuẩn, phải kiểm tra lỗi riêng trong từng callback.
 
-- Callback Hell: lồng quá nhiều callback dẫn đến mã khó đọc.
+Khó bảo trì: Đối với các chuỗi tác vụ phức tạp, việc theo dõi luồng thực thi trở nên khó khăn.
 
-- Xử lý lỗi phức tạp: cần kiểm tra lỗi thủ công trong mỗi callback.
-
-- Không trực quan: với các luồng phức tạp, khó theo dõi thứ tự thực thi.
-
-Vì vậy, bạn nên sử dụng Promise và Async/Await thay thế cho kỹ thuật callback. 
+Kết luận
+Callback là công cụ quan trọng trong lập trình JavaScript, đặc biệt trong các tình huống bất đồng bộ. Tuy nhiên, với những nhược điểm của mình, callback ngày nay thường được thay thế bằng Promise hoặc Async/Await để giúp mã rõ ràng và dễ bảo trì hơn.
