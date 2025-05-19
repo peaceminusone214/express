@@ -1,0 +1,188 @@
+14.1 Lập trình hướng sự kiện
+
+Lập trình hướng sự kiện (event-driven) là một mô hình lập trình mà luồng thực thi của chương trình được quyết định bởi các sự kiện (events). Các sự kiện này có thể là:
+
+- Hành động của người dùng (nhấp chuột, gõ phím).
+
+- Các thông điệp từ các chương trình khác.
+
+- Các sự kiện do hệ thống tạo ra (nhận được request, thao tác đọc/ghi tập tin).
+
+Thay vì chạy theo thứ tự mã nguồn từ trên xuống dưới, chương trình sẽ chờ đợi các sự kiện xảy ra và thực thi các hàm xử lý sự kiện (event handler) tương ứng.
+
+14.2 Lập trình hướng sự kiện trong Nodejs
+
+Nodejs là một môi trường được xây dựng dựa trên mô hình lập trình hướng sự kiện. Đây là một trong những đặc điểm cốt lõi giúp Node.js hoạt động hiệu quả và có khả năng xử lý nhiều kết nối đồng thời, đặc biệt phù hợp với các ứng dụng thời gian thực, các ứng dụng chuyên về I/O như ứng dụng web, API, hoặc ứng dụng mạng.
+
+Ứng dụng chuyên về I/O (I/O-intensive application) là các ứng dụng mà phần lớn thời gian xử lý hoặc tài nguyên được dành cho các hoạt động nhập/xuất (Input/Output), tức là các tác vụ liên quan đến việc đọc/ghi dữ liệu từ hoặc đến các nguồn bên ngoài như tập tin, cơ sở dữ liệu, mạng, hoặc thiết bị phần cứng, thay vì tập trung nhiều vào tính toán (CPU-intensive).
+
+Mô hình lập trình hướng sự kiện trong Nodejs gồm các thành phần:
+
+- Event: sự kiện
+
+- Event Emitter: bộ quản lý sự kiện
+
+- Event loop: vòng lặp sự kiện
+
+- Event handler: hàm xử lý sự kiện
+
+Mô tả cách hoạt động của mô hình:
+
+[1] EventEmitter
+
+Trong hệ thống sẽ có một thành phần điều khiển, nó quản lý việc phát ra sự kiện của các đối tượng và gửi sự kiện tới nơi cần nghe (các đối tượng đang lắng nghe sự kiện tương ứng). Thành phần này được gọi là EventEmitter - Bộ quản lý sự kiện). 
+
+Các phương thức chính của EventEmitter:
+
+- on(eventName, listener): khai báo một tên sự kiện (eventName) sẽ phát ra, và đăng ký một hàm lắng nghe và xử lý đi kèm.
+
+- emit(eventName, [arguments...]): phát ra một sự kiện, có tên là eventName, và các tham số đi kèm (nếu có).
+
+[2] Event
+
+Event là một hành động hoặc sự thay đổi trạng thái xảy ra trong ứng dụng, gọi chung là sự kiện (Event). Ví dụ:
+
+- Yêu cầu HTTP đến máy chủ (GET request, POST request).
+
+- Hoàn thành việc đọc/ghi tập tin.
+
+- Hết thời gian chờ (timeout).
+
+- Sự kiện lỗi.
+
+[3] Event Loop (Vòng lặp sự kiện)
+
+- Event Loop là cơ chế cốt lõi của Nodejs, cho phép nó xử lý các sự kiện không đồng bộ một cách hiệu quả.
+
+- Event Loop liên tục kiểm tra hàng đợi sự kiện (event queue) và thực thi các hàm callback khi có sự kiện xảy ra.
+
+- Điều này cho phép Nodejs xử lý nhiều yêu cầu đồng thời mà không bị chặn (blocking).
+
+[4] Event Handler (Hàm xử lý sự kiện)
+
+- Event handler là một hàm được gọi khi một sự kiện xảy ra. 
+
+- Event handler thường được đăng ký với một EventEmitter bằng phương thức on().
+
+=======================================================
+
+15.1 Lập trình hướng sự kiện trong Express
+
+Express là một framework, xây dựng trên nền tảng Nodejs. Express sử dụng mô hình lập trình hướng sự kiện để xử lý các HTTP request, đọc/ghi tập tin, làm việc với cơ sở dữ liệu, websocket, stream.
+
+Chúng ta cùng tìm hiểu cách Express sử dụng mô hình lập trình hướng sự kiện để xử lý các HTTP request.
+
+Trong mô hình này:
+
+- Mỗi request từ client (như GET, POST, PUT, DELETE) được xem là một sự kiện (Event).
+
+- Các module http, fs, stream là các Bộ quản lý sự kiện (Event Emitter) của Express.
+
+- Express sử dụng Vòng lặp sự kiện (Event Loop) của Node.js để lắng nghe và xử lý các sự kiện theo kiểu bất đồng bộ (asynchronous), không chặn luồng (non-blocking).
+
+- Các route handler và middleware đóng vai trò như các Hàm xử lý sự kiện (Event Handler), được gọi khi sự kiện tương ứng xảy ra.
+
+======================================================
+
+Route handler
+
+Route handler là các hàm xử lý được gắn với một luồng (route) cụ thể trong ứng dụng Express. Chúng được gọi khi một HTTP request (như GET, POST, PUT, DELETE) từ client khớp với route và method tương ứng. Route handler đóng vai trò như Event handler trong lập trình hướng sự kiện, xử lý logic chính cho request và trả về response.
+
+Route handler nhận 3 tham số chính:
+
+- req (request): đối tượng chứa thông tin về request từ client (URL, headers, body).
+
+- res (response): đối tượng dùng để gửi response về client.
+
+- next (optional): hàm gọi để chuyển tiếp request sang middleware hoặc handler tiếp theo (nếu có).
+
+Cú pháp:
+
+app.METHOD(path, callback);
+
+- Trong đó METHOD là HTTP method (get, post, put, delete), path là luồng, và callback là Route handler.
+
+// Express lắng nghe sự kiện GET request, tại route /
+
+// nếu có sự kiện, gọi hàm callback (route handler) tương ứng
+
+app.get('/', (req, res) =>
+{
+
+    const name = req.query.name;
+
+    res.send(`Web server chào bạn ${name}`);
+
+});
+
+Đặc điểm của Route handler:
+
+- Cụ thể cho route và method: mỗi Route handler chỉ được gọi khi request khớp (match) với route và HTTP method đã định nghĩa.
+
+- Xử lý logic chính: thường chứa logic nghiệp vụ như truy vấn cơ sở dữ liệu, xử lý dữ liệu, hoặc trả về kết quả.
+
+- Có thể nối tiếp: nhiều Route handler có thể được gắn vào cùng một route bằng cách truyền nhiều callback hoặc dùng next().
+
+Middleware là các hàm được thực thi trong quá trình xử lý một HTTP request, trước hoặc sau Route handler. Chúng có thể:
+
+- Xử lý request (như xác thực, ghi log).
+
+- Sửa đổi đối tượng req hoặc res.
+
+- Chuyển tiếp request bằng next() hoặc dừng luồng xử lý bằng cách gửi response.
+
+Middleware hoạt động như một "lớp trung gian" trong pipeline (dây chuyền, đường ống) xử lý request, giúp tách biệt logic chung khỏi Route handler.
+
+Cấu trúc cơ bản
+
+- Middleware cũng nhận 3 tham số: req, res, và next.
+
+- Được đăng ký bằng app.use() (áp dụng cho tất cả route) hoặc gắn vào route cụ thể.
+
+Cú pháp:
+
+app.use(middlewareFunction);
+
+Ví dụ:
+
+// Middleware: ghi log mỗi khi có GET request
+
+app.use((req, res, next) =>
+{
+
+    console.log(`[${new Date().toISOString()}] nhận GET request tại ${req.url}`)
+
+    // Chuyển tiếp sự kiện đến route handler
+
+    next();
+
+});
+
+Các loại Middleware
+
+[1] Application-level middleware: áp dụng cho toàn bộ ứng dụng với app.use().
+
+// middleware mức ứng dụng
+
+app.use((req, res, next) =>
+{
+
+    req.timestamp = new Date();
+
+    next();
+
+});
+
+app.get('/',(req, res) => {
+
+    res.send(`Khach truy cap web ap luc ${req.timestamp.toISOString()}`);
+
+});
+
+[2] Router-level middleware: áp dụng cho một nhóm route cụ thể bằng express.Router()
+
+[3] Error-handling middleware: xử lý lỗi, nhận thêm tham số err.
+
+[4] Built-in middleware: các middleware do Express cung cấp sẵn như express.json(), express.static().
+
+[5] Third-party middleware: middleware của các nhà cung cấp khác, ví dụ body-parser, cors, morgan.

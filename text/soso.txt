@@ -1,0 +1,39 @@
+[1] Hạ tầng Web và Web App
+ Hạ tầng Web gồm:
+Client (trình duyệt): gửi yêu cầu HTTP, hiển thị HTML/CSS/JS.
+
+Web server (Node.js, Apache, Nginx): xử lý request, gửi response.
+
+App server (Express, Spring, Laravel): chạy logic ứng dụng.
+
+Database server (MySQL, MongoDB, PostgreSQL): lưu trữ dữ liệu.
+
+ Phân biệt:
+Loại	Mô tả	Ví dụ
+Webpage	1 trang HTML đơn lẻ	about.html
+Website	Tập hợp nhiều webpage tĩnh	https://news.com
+Web App	Website có tương tác, xử lý logic	Gmail, Facebook
+
+ Làm Web App cần 5 công cụ:
+Ngôn ngữ: HTML, CSS, JavaScript (frontend); Node.js, PHP, Python (backend)
+
+Công cụ viết mã: VSCode, WebStorm
+
+Công cụ CSDL: MySQL, PostgreSQL, MongoDB
+
+Quản lý mã nguồn: Git + GitHub/GitLab
+
+Web server: ExpressJS, Apache, Nginx
+
+[7] Cơ sở dữ liệu (CSDL)
+Loại CSDL:
+SQL: có cấu trúc (MySQL, PostgreSQL)
+
+NoSQL: linh hoạt, không bảng (MongoDB)
+
+Câu lệnh SQL cơ bản:
+sql
+
+CREATE TABLE users (id INT, name VARCHAR(50));
+SELECT * FROM users;
+INSERT INTO users VALUES (1, 'Teo');

@@ -1,0 +1,99 @@
+10.1 Hàm callback là gì
+
+Trong JavaScript, hàm callback là một hàm được truyền vào một hàm khác như một tham số, và sẽ được thực thi sau khi hàm "cha" hoàn thành một tác vụ nào đó. Nói một cách đơn giản, nó là một cách để đảm bảo một đoạn mã được thực thi sau khi một đoạn mã khác hoàn thành.
+
+Hàm callback cũng là một trong ba kỹ thuật được sử dụng để lập trình bất đồng bộ trong JavaScript.
+
+Callback nghĩa là gọi lại.
+
+Các đặc điểm của hàm callback
+
+- Truyền như tham số: callback là một hàm được truyền vào hàm khác để thực thi sau khi một điều kiện hoặc tác vụ hoàn tất.
+
+- Thực thi bất đồng bộ: thường dùng để xử lý các tác vụ không chặn luồng chính (non-blocking), như truy cập thiết bị (đọc/ghi tập tin), gọi API, hoặc trong các hàm hẹn giờ (timer).
+
+- Tính linh hoạt: có thể là hàm ẩn danh (anonymous function), hàm mũi tên (arrow function), hoặc hàm đã được định nghĩa trước (function expression).
+
+- "Callback Hell": nếu lồng quá nhiều callback, mã nguồn có thể trở nên khó đọc và bảo trì. Callback hell thường được giải quyết bằng Promise hoặc async/await.
+
+Một số tính huống có sử dụng hàm callback
+
+- Xử lý sự kiện (event handling): gắn hàm callback để phản hồi hành động của người dùng (ví dụ: click, hover, submit).
+
+- Tác vụ bất đồng bộ: gọi API, đọc/ghi tập tin, hoặc sử dụng trong các hàm hẹn giờ (ví dụ: setTimeout, setInterval).
+
+- Xử lý mảng: sử dụng trong các phương thức như forEach, map, filter, reduce.
+
+- Hoàn thành tác vụ: đảm bảo một đoạn mã chạy sau khi tác vụ khác hoàn tất (ví dụ: tải dữ liệu từ server rồi hiển thị lên giao diện).
+
+- Tùy chỉnh logic: cho phép người dùng truyền logic riêng vào hàm tổng quát.
+
+Một số ví dụ sử dụng hàm callback
+
+Ví dụ 1. Dùng hàm callback trong xử lý sự kiện.
+
+Khi người dùng nhấp vào một nút “Đăng ký”, một sự kiện "click" được kích hoạt. Bạn có thể sử dụng hàm callback để xử lý sự kiện này và thực hiện một hành động nào đó.
+
+[callback1.html]
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+</head>
+
+<body>
+
+    <button id="dang-ky">Đăng
+ký</button>
+
+    <script>
+
+        document.getElementById("dang-ky").addEventListener("click",
+() => {
+
+            alert("Nút đã được bấm!");
+
+        });
+
+    </script>
+
+</body>
+
+</html>
+
+Mở tập tin callback1.html bằng trình duyệt để xem kết quả.
+
+Ví dụ 2. Sử dụng hàm callback trong các hàm hẹn giờ (ví dụ: setTimeout, setInterval).
+
+Khi hàm setTimeout() chạy, nó sẽ đưa luồng xử lý vào trạng thái chờ với thời gian được xác định ở tham số thứ 2 (ví dụ chờ 5000ms = 5 giây). Sau khi hết thời gian chờ, hàm callback sẽ được gọi và thực thi. 
+
+setTimeout(()
+=> {
+
+    console.log("Đã hết 5 giây! (sau 5 giây)");
+
+},
+5000);
+
+console.log("Đang chờ");
+
+Kết quả chạy:
+
+Đang chờ
+
+Đã hết 5 giây! (sau 5 giây)
+
+===============================================================================
+
+Nhược điểm của hàm callback
+
+- Callback Hell: lồng quá nhiều callback dẫn đến mã khó đọc.
+
+- Xử lý lỗi phức tạp: cần kiểm tra lỗi thủ công trong mỗi callback.
+
+- Không trực quan: với các luồng phức tạp, khó theo dõi thứ tự thực thi.
+
+Vì vậy, bạn nên sử dụng Promise và Async/Await thay thế cho kỹ thuật callback. 
